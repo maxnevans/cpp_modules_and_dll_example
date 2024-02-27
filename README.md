@@ -17,6 +17,8 @@ cmake --build build --target main
 ```
 
 Hint. If you want clang, use Ninja generator:
+> [!CAUTION]
+> This is not going to compile on Windows. Read the **Current problems** section about the details of why and how. Though, should compile find on Linux.
 ```bash
 make build
 cmake -GNinja -S . -B build
@@ -24,6 +26,11 @@ cmake --build build --target main
 ```
 
 ## Current problems
-VS Code doesn't support C++ modules. Syntax highlighting is broken.
- 
+#### 1.  VS Code doesn't support C++ modules. Syntax highlighting is broken.
+
 Track the issue: [Github Issue 6302 - Add IntelliSense for C++20 modules importing](https://github.com/microsoft/vscode-cpptools/issues/6302)
+
+#### 2. Clang as of 17.0.6 and even 18.1.0-rc3 doesn't support STD header units on Windows
+
+`import <vector>;` - this is going to produce compilation errors.
+The only possible solution is to use **module.modulemap** files [Stackoverflow Thread](https://stackoverflow.com/questions/67210597/how-to-compile-use-header-unit-modules-under-clang-c/67254709#67254709).
